@@ -30,6 +30,7 @@ class FoodController{
     }
 
     async update(request, response) {
+
         const {title, price, ingredients, categories, description} = request.body
         const id = request.params
 
@@ -54,7 +55,7 @@ class FoodController{
         await knex('ingredients').insert(ingredientInsert)
 
 
-        return response.json()
+        return response.json() 
     }
 }
 
