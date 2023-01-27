@@ -4,7 +4,7 @@ const AppError = require("../utils/AppError")
 
 class FoodController{
     async create(request, response){
-        const {title, price, ingredients, categories} = request.body
+        const {title, price, ingredients, categories, description} = request.body
 
         if(!title || !price || !ingredients) {
             throw new AppError("Preencha todos os campos")
@@ -13,7 +13,8 @@ class FoodController{
         const [dish_id] = await knex('dishes').insert({
             title,
             price,
-            categories
+            categories,
+            description
         })
         
         const ingredientInsert = ingredients.map(ingredient => {
@@ -26,6 +27,10 @@ class FoodController{
         await knex('ingredients').insert(ingredientInsert)
 
         return response.json()
+    }
+
+    async update(request, response) {
+        
     }
 }
 

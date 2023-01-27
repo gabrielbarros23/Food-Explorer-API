@@ -3,6 +3,7 @@ exports.up = knex => knex.schema.createTable("dishes", table => {
     table.text('title')
     table.text('price')
     table.text('categories')
+    table.text('description')
     table.text('image')
     table.timestamp('created_at').default(knex.fn.now())
     table.timestamp('updated_at').default(knex.fn.now())
