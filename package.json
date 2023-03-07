@@ -20,8 +20,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "migrate": "npx knex migrate:latest",
-    "dev": "nodemon ./src/server.js"
+    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "dev": "nodemon ./src/server.js",
+    "migrate": "npx knex migrate:latest"
   },
   "keywords": [],
   "author": "",
