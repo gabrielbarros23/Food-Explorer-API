@@ -15,14 +15,13 @@ class DishesController{
 
         await dishesCreateServices.create({data, user_id, imageFilename})
 
-        return response.json()
+        return response.status(201).json()
     }
 
     async update(request, response) {
         const {data} = request.body
         const imageFilename = request.file.filename
         const user_id  = request.user.id
-
         const {id} = request.params
 
 
