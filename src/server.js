@@ -10,7 +10,6 @@ const database = require("./database/sqlite")
 const uploadConfig = require("./configs/upload")
 
 database()
-
 app.use(cors())
 app.use(express.json())
 app.use(routes)
