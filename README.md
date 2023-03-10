@@ -13,7 +13,7 @@ Food Explorer é o ultimo desafio do curso explorer da Rocketseat. Uma aplicaç�
 
  - [NodeJs](https://nodejs.org/en/)
  - [Nodemon](https://nodemon.io/)
- - [Express](https://expressjs.com/)
+ - [Express](https://expressjs.com/) 
  - [SQLite](https://www.sqlite.org/index.html)
  - [Knex](https://knexjs.org/)
  - [JSON Web Token](https://www.npmjs.com/package/jsonwebtoken)
@@ -22,13 +22,12 @@ Food Explorer é o ultimo desafio do curso explorer da Rocketseat. Uma aplicaç�
  - [Multer](https://www.npmjs.com/package/multer)
  - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 
-
 ## Clone
 Para clonar navegue ao local desejado e digite no terminal.
 
 ```bash
-  $ git clone git@github.com:gabrielbarros23/Food-Explorer-API.git
-```
+  $ git clone https://github.com/gabrielbarros23/Food-Explorer-API.git
+```                
 
 
 ## BackEnd em modo desenvolvedor
