@@ -43,29 +43,36 @@ class DishesCreateServices {
     }
 
     async update({data, imageFilename, user_id, dish_id}){
-
         const user = await this.dishesRepository.showUser(user_id)
         if(!user.admin){
             throw new AppError("Apenas admins podem editar pratos")
         }
         
         let dishUpdated = await this.dishesRepository.showDish(dish_id)
-        
-        const diskStorage = new DiskStorage()
-        await diskStorage.deleteFile(dishUpdated.image)
-        await diskStorage.saveFile(imageFilename)
-        
-        
+
         const dataDish = JSON.parse(data)
         
-        dishUpdated = {
-            title: dataDish.title,
-            price: dataDish.price,
-            categorie: dataDish.categorie,
-            description: dataDish.description,
-            image: imageFilename
-        }
+        if(imageFilename){
 
+            const diskStorage = new DiskStorage()
+            await diskStorage.deleteFile(dishUpdated.image)
+            await diskStorage.saveFile(imageFilename)
+
+            dishUpdated = {
+                title: dataDish.title,
+                price: dataDish.price,
+                categorie: dataDish.categorie,
+                description: dataDish.description,
+                image: imageFilename
+            }
+        }else{
+            dishUpdated = {
+                title: dataDish.title,
+                price: dataDish.price,
+                categorie: dataDish.categorie,
+                description: dataDish.description,
+            }
+        }
         
         await this.dishesRepository.updateDish({dishUpdated, id:dish_id})
         

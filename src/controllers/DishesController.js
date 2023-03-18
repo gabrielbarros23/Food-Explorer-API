@@ -20,10 +20,14 @@ class DishesController{
 
     async update(request, response) {
         const {data} = request.body
-        const imageFilename = request.file.filename
+        let imageFilename = false
+        
+        if(request.file){
+            imageFilename = request.file.filename
+        }
+        
         const user_id  = request.user.id
         const {id} = request.params
-
 
         const dishesRepository = new DishesRepository()
         const dishesCreateServices = new DishesCreateServices(dishesRepository)
