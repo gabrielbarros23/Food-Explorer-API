@@ -4,11 +4,11 @@ const DiskStorage = require('../providers/DiskStorage')
 
 
 class DishesCreateServices {
-    constructor(dishesRepository){
+    constructor(dishesRepository) {
         this.dishesRepository = dishesRepository;
     }
 
-    async create({data, imageFilename, user_id}){
+    async create({ data, imageFilename, user_id }) {
 
         const diskStorage = new DiskStorage()
         await diskStorage.saveFile(imageFilename)
@@ -17,7 +17,7 @@ class DishesCreateServices {
 
         const userIsAdmin = await this.dishesRepository.showUser(user_id)
 
-        if(!userIsAdmin.admin){
+        if (!userIsAdmin.admin) {
             throw new AppError("Apenas admins podem criar pratos")
         }
 
@@ -26,14 +26,14 @@ class DishesCreateServices {
             image: imageFilename
         }
 
-        if(!dataDish.title || !dataDish.price || !dataDish.ingredients) {
+        if (!dataDish.title || !dataDish.price || !dataDish.ingredients) {
             throw new AppError("Preencha todos os campos")
         }
 
         const dish_id = await this.dishesRepository.createDish(dataDish)
 
         const ingredientInsert = dataDish.ingredients.map(ingredient => {
-            return({
+            return ({
                 ingredient,
                 dish_id
             })
@@ -42,75 +42,75 @@ class DishesCreateServices {
         return await this.dishesRepository.insertIngredients(ingredientInsert)
     }
 
-    async update({data, imageFilename, user_id, dish_id}){
+    async update({ data, image, user_id, dish_id }) {
         const user = await this.dishesRepository.showUser(user_id)
-        if(!user.admin){
+
+        if (!user.admin) {
             throw new AppError("Apenas admins podem editar pratos")
         }
-        
-        let dishUpdated = await this.dishesRepository.showDish(dish_id)
 
-        const dataDish = JSON.parse(data)
+        const newDishData = JSON.parse(data)
+        let dishUpdated = {}
         
-        if(imageFilename){
-
+        if (image) {
+            
+            const oldDishWithImage = await this.dishesRepository.showDish(dish_id)
+            
             const diskStorage = new DiskStorage()
-            await diskStorage.deleteFile(dishUpdated.image)
-            await diskStorage.saveFile(imageFilename)
+            await diskStorage.deleteFile(oldDishWithImage.image)
+            await diskStorage.saveFile(image)
 
             dishUpdated = {
-                title: dataDish.title,
-                price: dataDish.price,
-                categorie: dataDish.categorie,
-                description: dataDish.description,
-                image: imageFilename
+                title: newDishData.title,
+                price: newDishData.price,
+                categorie: newDishData.categorie,
+                description: newDishData.description,
+                image
             }
-        }else{
+        } else {
             dishUpdated = {
-                title: dataDish.title,
-                price: dataDish.price,
-                categorie: dataDish.categorie,
-                description: dataDish.description,
+                title: newDishData.title,
+                price: newDishData.price,
+                categorie: newDishData.categorie,
+                description: newDishData.description,
             }
         }
-        
-        await this.dishesRepository.updateDish({dishUpdated, id:dish_id})
-        
-        
-        const ingredientInsert = dataDish.ingredients.map(ingredient => {
-            return({
+
+        await this.dishesRepository.updateDish({ dishUpdated, id: dish_id })
+
+        const ingredientInsert = newDishData.ingredients.map(ingredient => {
+            return ({
                 ingredient,
                 dish_id: dish_id
             })
         })
-        
 
         await this.dishesRepository.deleteIngredients(dish_id)
         await this.dishesRepository.updateIngredient(ingredientInsert)
-        
-        return 
+
+        return
     }
 
-    async delete({dish_id, user_id}){
+    async delete({ dish_id, user_id }) {
 
         const user = await this.dishesRepository.showUser(user_id)
-        
-        if(!user.admin){
+
+        if (!user.admin) {
             throw new AppError("Apenas admins podem apagar pratos")
         }
 
-        
-        
+
+
         const dish = await this.dishesRepository.showDish(dish_id)
         const diskStorage = new DiskStorage()
         await diskStorage.deleteFile(dish.image)
-        
+
         await this.dishesRepository.deleteDish(dish_id)
 
         return
     }
 
-    async index({search}){
+    async index({ search }) {
         const dishes = await this.dishesRepository.searchFunction(search)
 
         const ingredients = await this.dishesRepository.showAllIngredients()
@@ -126,7 +126,7 @@ class DishesCreateServices {
         return dishWithIngredients
     }
 
-    async show({dish_id}){
+    async show({ dish_id }) {
         const dish = await this.dishesRepository.showDish(dish_id)
         const ingredients = await this.dishesRepository.showIngredient(dish_id)
 

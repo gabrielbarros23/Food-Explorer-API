@@ -20,30 +20,30 @@ class DishesController{
 
     async update(request, response) {
         const {data} = request.body
-        let imageFilename = false
+        let image = false
         
         if(request.file){
-            imageFilename = request.file.filename
+            image = request.file.filename
         }
         
         const user_id  = request.user.id
-        const {id} = request.params
+        const {dish_id} = request.params
 
         const dishesRepository = new DishesRepository()
         const dishesCreateServices = new DishesCreateServices(dishesRepository)
 
-        await dishesCreateServices.update({data, imageFilename, user_id, dish_id:id})
+        await dishesCreateServices.update({data, image, user_id, dish_id})
 
         return response.json() 
     }
 
     async show(request, response) {
-        const { id } = request.params
+        const { dish_id } = request.params
 
         const dishesRepository = new DishesRepository()
         const dishesCreateServices = new DishesCreateServices(dishesRepository)
 
-        const data = await dishesCreateServices.show({dish_id: id})
+        const data = await dishesCreateServices.show({dish_id})
 
         return response.json(data)
     }
@@ -60,13 +60,13 @@ class DishesController{
     }
 
     async delete(request, response) {
-        const {id} = request.params
+        const {dish_id} = request.params
         const user_id  = request.user.id
   
         const dishesRepository = new DishesRepository()
         const dishesCreateServices = new DishesCreateServices(dishesRepository)
 
-        await dishesCreateServices.delete({dish_id:id, user_id})
+        await dishesCreateServices.delete({dish_id, user_id})
 
         return response.json()
     }

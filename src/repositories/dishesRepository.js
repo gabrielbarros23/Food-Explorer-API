@@ -46,9 +46,7 @@ class dishesRepository {
 
     async updateDish({dishUpdated, id}){
 
-
         return await knex("dishes").update(dishUpdated).where({id})
-
 
     }
 

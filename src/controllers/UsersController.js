@@ -1,6 +1,7 @@
 const UserRepository = require('../repositories/userRepository')
 const UserCreateServices = require('../services/UserCreateServices')
 
+
 class UsersController {
     async create(request, response,) {
         const { name, email, password} = request.body
@@ -15,7 +16,7 @@ class UsersController {
         
         await userCreateServices.create({name, email, password, admin})
 
-        return response.json()
+        response.status(201).json()
     }
 }
 

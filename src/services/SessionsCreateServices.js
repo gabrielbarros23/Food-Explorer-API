@@ -12,7 +12,6 @@ class SessionsCreateServices {
     async execute({email, password}){
 
         const user = await this.sessionRepository.verifyUserExist(email)
-
         if(!user){
             throw new AppError('Email ou senha incorreta', 401)
         }

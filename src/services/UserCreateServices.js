@@ -10,17 +10,17 @@ class UserCreateServices {
 
         const checkUserEmail = await this.userRepository.findByEmail(email)
         
-        if(checkUserEmail) {
-            throw new AppError("esse email ja esta em uso.")
+        if(!name || !email || !password) {
+            throw new AppError("Preencha todos os campos.", 400)
         }
         
-        if(!name || !email || !password) {
-            throw new AppError("Preencha todos os campos.")
+        if(checkUserEmail) {
+            throw new AppError("esse email ja esta em uso.", 400)
         }
 
         const hashedPassword = await hash(password, 8)
 
-        const userCreated = await this.userRepository.create({name, email, password: hashedPassword, admin})
+        const userCreated = await this.userRepository.create({name, email, password: hashedPassword})
 
         return userCreated
     }
