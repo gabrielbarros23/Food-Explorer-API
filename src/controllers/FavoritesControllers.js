@@ -1,6 +1,7 @@
 const FavoritesRepository = require('../repositories/favoritesRepository')
 const FavoritesCreateServices = require('../services/FavoritesCreateServices')
 
+
 class FavoritesControllers {
     async create(request, response) {
         const { dish_id, dish_title } = request.body

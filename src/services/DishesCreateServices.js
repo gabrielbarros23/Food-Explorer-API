@@ -1,8 +1,6 @@
 const AppError = require('../utils/AppError')
 const DiskStorage = require('../providers/DiskStorage')
 
-
-
 class DishesCreateServices {
     constructor(dishesRepository) {
         this.dishesRepository = dishesRepository;
@@ -10,10 +8,12 @@ class DishesCreateServices {
 
     async create({ data, imageFilename, user_id }) {
 
-        const diskStorage = new DiskStorage()
-        await diskStorage.saveFile(imageFilename)
-
-        let dataDish = JSON.parse(data)
+        if (!data) {
+            throw new AppError("Dados do prato não entregado corretamente")
+        }
+        if (!imageFilename) {
+            throw new AppError("Selecione uma imagem")
+        }
 
         const userIsAdmin = await this.dishesRepository.showUser(user_id)
 
@@ -21,18 +21,29 @@ class DishesCreateServices {
             throw new AppError("Apenas admins podem criar pratos")
         }
 
-        dataDish = {
-            ...dataDish,
+        
+
+
+        const diskStorage = new DiskStorage()
+        await diskStorage.saveFile(imageFilename)
+
+        const newDishData = JSON.parse(data)
+        const dataDish = {
+            title: newDishData.title,
+            price: newDishData.price,
+            categorie: newDishData.categorie,
+            description: newDishData.description,
             image: imageFilename
         }
 
-        if (!dataDish.title || !dataDish.price || !dataDish.ingredients) {
+        if (!dataDish.title || !dataDish.price || !dataDish.description || !dataDish.image || !dataDish.categorie) {
             throw new AppError("Preencha todos os campos")
         }
 
+        
         const dish_id = await this.dishesRepository.createDish(dataDish)
 
-        const ingredientInsert = dataDish.ingredients.map(ingredient => {
+        const ingredientInsert = newDishData.ingredients.map(ingredient => {
             return ({
                 ingredient,
                 dish_id
@@ -47,6 +58,14 @@ class DishesCreateServices {
 
         if (!user.admin) {
             throw new AppError("Apenas admins podem editar pratos")
+        }
+
+        if (!data) {
+            throw new AppError("Dados do prato não entregado corretamente")
+        }
+
+        if (!dish_id) {
+            throw new AppError("ID do prato não encontrado")
         }
 
         const newDishData = JSON.parse(data)
@@ -67,7 +86,7 @@ class DishesCreateServices {
                 description: newDishData.description,
                 image
             }
-        } else {
+        }else {
             dishUpdated = {
                 title: newDishData.title,
                 price: newDishData.price,
@@ -99,7 +118,9 @@ class DishesCreateServices {
             throw new AppError("Apenas admins podem apagar pratos")
         }
 
-
+        if (!dish_id) {
+            throw new AppError("Id do prato não encontrado")
+        }
 
         const dish = await this.dishesRepository.showDish(dish_id)
         const diskStorage = new DiskStorage()
@@ -127,9 +148,12 @@ class DishesCreateServices {
     }
 
     async show({ dish_id }) {
+        if (!dish_id) {
+            throw new AppError("Id do prato não encontrado")
+        }
+
         const dish = await this.dishesRepository.showDish(dish_id)
         const ingredients = await this.dishesRepository.showIngredient(dish_id)
-
 
         return ({
             ...dish,
