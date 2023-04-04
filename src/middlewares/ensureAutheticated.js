@@ -20,7 +20,7 @@ function ensureAuthenticated(req, res, next) {
         return next()
     }catch(err){
         if(err instanceof jwt.TokenExpiredError) {
-            throw new AppError('JWT Token Expirado', 401)
+            throw new AppError('Token Expirado', 401)
         }
         throw new AppError('JWT Token invalido', 401)
     }

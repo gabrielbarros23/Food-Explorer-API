@@ -45,8 +45,12 @@ class dishesRepository {
     }
 
     async updateDish({dishUpdated, id}){
+        const dishUpdatedWithTime = {
+            ...dishUpdated,
+            updated_at: knex.fn.now()
+        }
 
-        return await knex("dishes").update(dishUpdated).where({id})
+        return await knex("dishes").update(dishUpdatedWithTime).where({id})
 
     }
 

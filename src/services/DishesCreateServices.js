@@ -21,9 +21,6 @@ class DishesCreateServices {
             throw new AppError("Apenas admins podem criar pratos")
         }
 
-        
-
-
         const diskStorage = new DiskStorage()
         await diskStorage.saveFile(imageFilename)
 
@@ -86,6 +83,7 @@ class DishesCreateServices {
                 description: newDishData.description,
                 image
             }
+            
         }else {
             dishUpdated = {
                 title: newDishData.title,
