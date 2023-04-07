@@ -10,7 +10,7 @@ cartRouter.use(ensureAutheticated)
 
 cartRouter.post('/', cartController.create)
 cartRouter.get('/', cartController.get)
-cartRouter.delete('/:id_cart', cartController.delete)
+cartRouter.delete('/', cartController.delete)
 
 
 

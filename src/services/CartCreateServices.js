@@ -20,8 +20,11 @@ class CartCreateServices {
     return await this.categoriesRepository.get({user_id})
   }
 
-  async delete(){
-
+  async delete({cart_id}){
+    if(!cart_id){
+      throw new AppError("id não encontrado.")
+    }
+    return await this.categoriesRepository.delete({cart_id})
   }
 }
 
