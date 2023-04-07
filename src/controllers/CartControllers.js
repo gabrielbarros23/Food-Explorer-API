@@ -13,11 +13,16 @@ class CartControllers {
 
     return response.json()
   }
-  async get(){
+  async get(request, response){
+    const user_id = request.user.id
+
     const categoriesRepository = new CartRespository()
     const cartCreateServices = new CartCreateServices(categoriesRepository)
+
+    const cart = await cartCreateServices.get({user_id})
+    return response.json(cart)
   }
-  async delete(){
+  async delete(request, response){
     const categoriesRepository = new CartRespository()
     const cartCreateServices = new CartCreateServices(categoriesRepository)
   }
