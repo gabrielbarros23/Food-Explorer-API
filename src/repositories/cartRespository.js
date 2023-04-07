@@ -1,9 +1,9 @@
 const knex = require('../database/knex')
 
 class cartRepository {
-    async creeate(){
+    async create({dish_id, user_id}){
 
-        
+      return await knex("cart").insert({dish_id, user_id})
     }
 }
 
