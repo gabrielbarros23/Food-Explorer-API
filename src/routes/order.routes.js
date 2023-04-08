@@ -11,6 +11,6 @@ orderRouter.use(ensureAutheticated)
 
 orderRouter.post('/', orderController.CreateOrder)
 orderRouter.get('/', orderController.GetAllOrders)
-or
+orderRouter.put('/:order_id', orderController.UpdateOrder)
 
 module.exports = orderRouter
