@@ -1,4 +1,4 @@
-exports.up = (knex) => knex.schema.createTable("histories", (table) => {
+exports.up = (knex) => knex.schema.createTable("history", (table) => {
   table.increments('id')
   table.integer('status')
   table.integer('order_number').references('id').inTable('orders_number').onDelete('cascade')
@@ -7,4 +7,4 @@ exports.up = (knex) => knex.schema.createTable("histories", (table) => {
   table.timestamp('created_at').default(knex.fn.now())
 });
 
-exports.down = (knex) => knex.schema.dropTable("histories");
+exports.down = (knex) => knex.schema.dropTable("history");
