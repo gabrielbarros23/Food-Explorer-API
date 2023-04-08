@@ -1,5 +1,6 @@
 exports.up = (knex) => knex.schema.createTable("histories", (table) => {
   table.increments('id')
+  table.integer('status')
   table.integer('dish_id').references('id').inTable('dishes')
   table.integer('user_id').references('id').inTable('users').onDelete("CASCADE")
   table.timestamp('created_at').default(knex.fn.now())
