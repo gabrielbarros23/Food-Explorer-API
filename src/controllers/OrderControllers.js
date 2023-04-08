@@ -16,16 +16,17 @@ class OrderControllers {
   
   async GetAllOrders(request, response){
 
-    const orderRepository = new CartRespository()
+    const orderRepository = new OrderRespository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
-    const cart = await orderCreateServices.get({})
-    return response.json(cart)
+    const orders = await orderCreateServices.GetAllOrders()
+
+    return response.json(orders)
   }
 
   async UpdateOrder(request, response){
 
-    const orderRepository = new CartRespository()
+    const orderRepository = new OrderRespository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
     await orderCreateServices.delete({cart_id})

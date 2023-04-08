@@ -11,6 +11,14 @@ class orderRepository {
     async createOrder(orderInsert){
         return await knex('orders').insert(orderInsert)
     }
+
+    async getAllOrdersNumber(){
+        return await knex('orders').select('order_number', 'created_at').orderBy('order_number').groupBy("order_number")
+    }
+
+    async getAllOrders(){
+        return await knex('orders')
+    }
 }
 
 module.exports = orderRepository
