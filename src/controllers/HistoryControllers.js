@@ -3,13 +3,13 @@ const HistoryCreateServices = require('../services/HistoryCreateServices')
 
 class HistoryControllers {
   async createHistoric(request, response){
-    const {dish_id} = request.params
+    const {dish_id, order_number} = request.body
     const user_id = request.user.id
 
-    const categoriesRepository = new HistoryRespository()
-    const historyCreateServices = new HistoryCreateServices(categoriesRepository)
+    const historyRepository = new HistoryRespository()
+    const historyCreateServices = new HistoryCreateServices(historyRepository)
 
-    await historyCreateServices.create({dish_id, user_id})
+    await historyCreateServices.createHistoric({dish_id, user_id, order_number})
 
     return response.json()
   }
@@ -17,18 +17,18 @@ class HistoryControllers {
   async getUserHistoric(request, response){
     const user_id = request.user.id
 
-    const categoriesRepository = new HistoryRespository()
-    const historyCreateServices = new HistoryCreateServices(categoriesRepository)
+    const historyRepository = new HistoryRespository()
+    const historyCreateServices = new HistoryCreateServices(historyRepository)
 
     const cart = await historyCreateServices.get({user_id})
     return response.json(cart)
   }
 
   async updateStatus(request, response){
-    const {cart_id} = request.params
+    const {cart_id} = request.body
 
-    const categoriesRepository = new HistoryRespository()
-    const historyCreateServices = new HistoryCreateServices(categoriesRepository)
+    const historyRepository = new HistoryRespository()
+    const historyCreateServices = new HistoryCreateServices(historyRepository)
 
     await historyCreateServices.delete({cart_id})
 

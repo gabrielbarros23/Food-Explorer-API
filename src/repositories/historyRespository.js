@@ -2,11 +2,8 @@ const knex = require('../database/knex')
 
 
 class historyRespository {
-  async showIngredients(dish_id){
-
-    const ingredients = await knex('ingredients').where({dish_id})
-    
-    return(ingredients)
+  async createHistory(historyInsert){
+    return await knex('history').insert(historyInsert)
   }
 }
 

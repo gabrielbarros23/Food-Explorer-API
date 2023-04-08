@@ -5,11 +5,29 @@ class HistoryCreateServices {
     this.historyRespository = historyRespository;
   }
 
-  async create({dish_id, user_id}){
-    if(!dish_id || !user_id){
-      throw new AppError("id do prato ou do usuário não encontrado.")
+  async createHistoric({dish_id, user_id, order_number}){
+    if(!dish_id){
+      throw new AppError("id do prato não encontrado.")
     }
-    return await this.historyRespository.create({dish_id, user_id})
+
+    if(!user_id){
+      throw new AppError("usuário não encontrado.")
+    }
+
+    if(!order_number){
+      throw new AppError("Numero do pedido não encontrado.")
+    }
+
+    const historyInsert = dish_id.map((dish_id) =>(
+      {
+        order_number,
+        dish_id,
+        user_id,
+        status: 1
+      }
+    ))
+
+    return await this.historyRespository.createHistory(historyInsert)
   }
 
   async get({user_id}){
