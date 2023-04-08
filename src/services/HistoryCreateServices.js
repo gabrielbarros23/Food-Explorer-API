@@ -10,10 +10,6 @@ class HistoryCreateServices {
       throw new AppError("id do prato não encontrado.")
     }
 
-    if(!user_id){
-      throw new AppError("usuário não encontrado.")
-    }
-
     if(!order_number){
       throw new AppError("Numero do pedido não encontrado.")
     }
@@ -38,11 +34,23 @@ class HistoryCreateServices {
     return await this.historyRespository.get({user_id})
   }
 
-  async delete({cart_id}){
-    if(!cart_id){
-      throw new AppError("id não encontrado.")
+  async updateStatus({order_number, status, user_id}){
+    if(!order_number){
+      throw new AppError("numero do pedido não encontrado.")
     }
-    return await this.historyRespository.delete({cart_id})
+
+    if(!status){
+      throw new AppError("status indefinido")
+    }
+
+    const user = await this.historyRespository.getUser({user_id})
+    const isAdmin = user[0].admin
+
+    if(!isAdmin){
+      throw new AppError("apenas admins conseguem mudar o status do pedido")
+    }
+
+    return await this.historyRespository.uptadeHistoryStatus({order_number, status})
   }
 }
 

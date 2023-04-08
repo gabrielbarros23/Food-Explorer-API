@@ -25,12 +25,13 @@ class HistoryControllers {
   }
 
   async updateStatus(request, response){
-    const {cart_id} = request.body
+    const {order_number, status} = request.body
+    const user_id = request.user.id
 
     const historyRepository = new HistoryRespository()
     const historyCreateServices = new HistoryCreateServices(historyRepository)
 
-    await historyCreateServices.delete({cart_id})
+    await historyCreateServices.updateStatus({order_number, status, user_id})
 
     return response.json()
   }
