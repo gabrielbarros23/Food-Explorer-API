@@ -27,6 +27,10 @@ class orderRepository {
     async updateStatus({order_number, status}){
         return await knex('orders').where({order_number}).update({status})
     }
+
+    async deleteOrder({order_number}){
+        return await knex('orders').where({order_number}).delete()
+    }
 }
 
 module.exports = orderRepository
