@@ -8,8 +8,8 @@ class orderRepository {
         
     }
 
-    async isAdmin({user_id}){
-        return await knex('users').where({id:user_id}).select('admin')
+    async returnUser({user_id}){
+        return await knex('users').where({id:user_id})
     }
 
     async createOrder(orderInsert){

@@ -36,6 +36,18 @@ class OrderControllers {
 
     return response.json()
   }
+
+  async DeleteOrderWhenIsComplete(request, response){
+    const {order_number} = request.params
+    const user_id = request.user.id
+
+    const orderRepository = new OrderRespository()
+    const orderCreateServices = new OrderCreateServices(orderRepository)
+
+    await orderCreateServices.DeleteOrderWhenIsComplete({user_id, order_number})
+
+    return response.json()
+  }
 }
 
 module.exports = OrderControllers

@@ -27,7 +27,7 @@ class OrderCreateServices {
     }
 
     async GetAllOrders({user_id}){
-      const user = await this.orderRepository.isAdmin({user_id})
+      const user = await this.orderRepository.returnUser({user_id})
       const isAdmin = user[0].admin
       
       if(!isAdmin){
@@ -72,6 +72,15 @@ class OrderCreateServices {
 
       return await this.orderRepository.updateStatus({order_number, status})
 
+    }
+
+    async DeleteOrderWhenIsComplete({user_id, order_number}){
+      const user = await this.orderRepository.isAdmin({user_id})
+      const isAdmin = user[0].admin
+      
+      if(!isAdmin){
+        throw new AppError("Apenas admins podem ver os pedidos pendentes")
+      }
     }
 }
 
