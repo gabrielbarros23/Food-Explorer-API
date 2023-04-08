@@ -9,9 +9,9 @@ class OrderControllers {
     const orderRepository = new OrderRespository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
-    await orderCreateServices.CreateOrder({dish_id, user_id})
+    const order_number = await orderCreateServices.CreateOrder({dish_id, user_id})
 
-    return response.json()
+    return response.json(order_number)
   }
   
   async GetAllOrders(request, response){

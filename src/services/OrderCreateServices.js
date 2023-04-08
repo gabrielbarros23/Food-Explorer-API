@@ -24,7 +24,8 @@ class OrderCreateServices {
     ))
 
     await this.orderRepository.createOrder(orderInsert)
-    return await this.orderRepository.createHistories(orderInsert)
+    
+    return order_number
 
   }
 
