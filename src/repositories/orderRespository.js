@@ -16,6 +16,10 @@ class orderRepository {
         return await knex('orders').insert(orderInsert)
     }
 
+    async createHistories(orderInsert){
+        return await knex('histories').insert(orderInsert)
+    }
+
     async getAllOrdersNumber(){
         return await knex('orders').select('order_number', 'created_at').orderBy('order_number').groupBy("order_number")
     }
