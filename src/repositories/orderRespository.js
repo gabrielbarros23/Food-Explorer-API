@@ -8,6 +8,10 @@ class orderRepository {
         
     }
 
+    async isAdmin({user_id}){
+        return await knex('users').where({id:user_id}).select('admin')
+    }
+
     async createOrder(orderInsert){
         return await knex('orders').insert(orderInsert)
     }
@@ -18,6 +22,10 @@ class orderRepository {
 
     async getAllOrders(){
         return await knex('orders')
+    }
+
+    async updateStatus({order_number, status}){
+        return await knex('orders').where({order_number}).update({status})
     }
 }
 

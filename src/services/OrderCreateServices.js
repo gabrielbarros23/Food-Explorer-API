@@ -8,26 +8,32 @@ class OrderCreateServices {
 
     async CreateOrder({dish_id, user_id}){
 
-        if(!dish_id){
-          throw new AppError("Id do prato não encontrado")
+      if(!dish_id){
+        throw new AppError("Id do prato não encontrado")
+      }
+
+      const order_number = await this.orderRepository.getOrderNumber()
+
+      const orderInsert = dish_id.map(dish_id => (
+        {
+          order_number,
+          dish_id,
+          user_id,
+          status: 1
         }
+      ))
 
-
-        const order_number = await this.orderRepository.getOrderNumber()
-
-        const orderInsert = dish_id.map(dish_id => (
-          {
-            order_number,
-            dish_id,
-            user_id,
-            status: 1
-          }
-        ))
-
-        return await this.orderRepository.createOrder(orderInsert)
+      return await this.orderRepository.createOrder(orderInsert)
     }
 
-    async GetAllOrders(){
+    async GetAllOrders({user_id}){
+      const user = await this.orderRepository.isAdmin({user_id})
+      const isAdmin = user[0].admin
+      
+      if(!isAdmin){
+        throw new AppError("Apenas admins podem ver os pedidos pendentes")
+      }
+
       const allOrdersNumber =  await this.orderRepository.getAllOrdersNumber()
 
       const allOrders = await this.orderRepository.getAllOrders()
@@ -49,8 +55,23 @@ class OrderCreateServices {
         
       })
       
-
       return OrdersNumbersWithOrder
+    }
+
+    async UpdateStatusToPending({user_id, order_number, status}){
+      const user = await this.orderRepository.isAdmin({user_id})
+      const isAdmin = user[0].admin
+      
+      if(!isAdmin){
+        throw new AppError("Apenas admins podem ver os pedidos pendentes")
+      }
+
+      if(!order_number || !status){
+        throw new AppError("Dados não enviado corretamente")
+      }
+
+      return await this.orderRepository.updateStatus({order_number, status})
+
     }
 }
 
