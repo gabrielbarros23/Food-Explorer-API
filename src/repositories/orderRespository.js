@@ -2,11 +2,14 @@ const knex = require('../database/knex')
 
 
 class orderRepository {
-    async showIngredients(dish_id){
+    async getOrderNumber(){
 
-        const ingredients = await knex('ingredients').where({dish_id})
+        return await knex('orders_number').insert({})
         
-        return(ingredients)
+    }
+
+    async createOrder(orderInsert){
+        return await knex('orders').insert(orderInsert)
     }
 }
 

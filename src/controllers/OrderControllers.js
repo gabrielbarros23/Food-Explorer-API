@@ -3,11 +3,13 @@ const OrderCreateServices = require('../services/OrderCreateServices')
 
 class OrderControllers {
   async CreateOrder(request, response){
-    
+    const {dish_id} = request.body
+    const user_id = request.user.id
+
     const orderRepository = new OrderRespository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
-    await orderCreateServices.create({})
+    await orderCreateServices.CreateOrder({dish_id, user_id})
 
     return response.json()
   }
