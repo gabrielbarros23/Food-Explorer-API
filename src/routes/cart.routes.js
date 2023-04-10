@@ -10,7 +10,7 @@ cartRouter.use(ensureAuthenticated)
 
 cartRouter.post('/:dish_id', cartController.create)
 cartRouter.get('/', cartController.get)
-cartRouter.delete('/:cart_id', cartController.delete)
+cartRouter.delete('/', cartController.delete)
 
 
 

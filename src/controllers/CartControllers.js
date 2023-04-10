@@ -25,12 +25,12 @@ class CartControllers {
   }
 
   async delete(request, response){
-    const {cart_id} = request.params
+    const user_id = request.user.id
 
     const categoriesRepository = new CartRepository()
     const cartCreateServices = new CartCreateServices(categoriesRepository)
 
-    await cartCreateServices.delete({cart_id})
+    await cartCreateServices.delete({user_id})
 
     return response.json()
   }

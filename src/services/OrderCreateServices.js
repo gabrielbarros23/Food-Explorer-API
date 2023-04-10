@@ -38,21 +38,30 @@ class OrderCreateServices {
     }
 
     const allOrdersNumber =  await this.orderRepository.getAllOrdersNumber()
+    const order_number = allOrdersNumber.map(order => {
+      return order.order_number
+    })
 
-    const allOrders = await this.orderRepository.getAllOrders()
+    const allOrders = await this.orderRepository.getAllOrdersWithOrdersNumber(order_number)
 
     const OrdersNumbersWithOrder = allOrdersNumber.map(OrdersNumber => {
 
       const ordersArray = allOrders.filter(order => order.order_number === OrdersNumber.order_number)
       
       const Orders = ordersArray.map(order =>{
-        const {order_number, created_at, ...newOrder } = order
-        return newOrder
+        const {order_number, created_at, status, ...newOrder } = order
+        return newOrder 
+      })
+
+      const status = ordersArray.map(order => {
+        const {status , ...rest} = order
+        return status
       })
 
       return {
         order_number:OrdersNumber.order_number,
         created_at: OrdersNumber.created_at,
+        status: status[0],
         Orders
       }
       

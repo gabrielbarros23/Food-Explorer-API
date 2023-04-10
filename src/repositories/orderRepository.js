@@ -18,8 +18,8 @@ class orderRepository {
         return await knex('orders').select('order_number', 'created_at').orderBy('order_number').groupBy("order_number")
     }
 
-    async getAllOrders(){
-        return await knex('orders')
+    async getAllOrdersWithOrdersNumber(order_number){
+        return await knex('orders').whereIn('order_number', order_number)
     }
 
     async updateStatus({order_number, status}){

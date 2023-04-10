@@ -39,13 +39,19 @@ class HistoryCreateServices {
       const dishesObject = dishesFromOrderNumber.filter(dish => dish.order_number === orderNumber.order_number)
 
       const dishes = dishesObject.map(dish => {
-        const { created_at, order_number, ...rest} = dish
+        const { created_at, order_number, status, ...rest} = dish
         return rest
+      })
+
+      const status = dishesObject.map(order => {
+        const {status , ...rest} = order
+        return status
       })
 
       return {
         order_number: orderNumber.order_number,
         create_at: orderNumber.created_at,
+        status: status[0],
         dishes
       }
     })
