@@ -1,4 +1,4 @@
-const OrderRespository = require('../repositories/orderRespository')
+const OrderRepository = require('../repositories/orderRepository')
 const OrderCreateServices = require('../services/OrderCreateServices')
 
 class OrderControllers {
@@ -6,7 +6,7 @@ class OrderControllers {
     const {dish_id} = request.body
     const user_id = request.user.id
 
-    const orderRepository = new OrderRespository()
+    const orderRepository = new OrderRepository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
     const order_number = await orderCreateServices.CreateOrder({dish_id, user_id})
@@ -17,7 +17,7 @@ class OrderControllers {
   async GetAllOrders(request, response){
     const user_id = request.user.id
 
-    const orderRepository = new OrderRespository()
+    const orderRepository = new OrderRepository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
     const orders = await orderCreateServices.GetAllOrders({user_id})
@@ -29,7 +29,7 @@ class OrderControllers {
     const {order_number, status} = request.body
     const user_id = request.user.id
 
-    const orderRepository = new OrderRespository()
+    const orderRepository = new OrderRepository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
     await orderCreateServices.UpdateStatusToPending({user_id, order_number, status})
@@ -41,7 +41,7 @@ class OrderControllers {
     const {order_number} = request.params
     const user_id = request.user.id
 
-    const orderRepository = new OrderRespository()
+    const orderRepository = new OrderRepository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
 
     await orderCreateServices.DeleteOrderWhenIsComplete({user_id, order_number})

@@ -1,12 +1,12 @@
 const {Router} = require('express')
 const cartRouter = Router()
-const ensureAutheticated = require('../middlewares/ensureAutheticated')
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 const CartController = require('../controllers/CartControllers')
 
 const cartController = new CartController()
 
-cartRouter.use(ensureAutheticated)
+cartRouter.use(ensureAuthenticated)
 
 cartRouter.post('/:dish_id', cartController.create)
 cartRouter.get('/', cartController.get)

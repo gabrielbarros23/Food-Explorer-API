@@ -13,9 +13,6 @@ class CartCreateServices {
   }
 
   async get({user_id}){
-    if(!user_id){
-      throw new AppError("id do prato não encontrado.")
-    }
 
     return await this.categoriesRepository.get({user_id})
   }

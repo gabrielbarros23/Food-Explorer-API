@@ -1,15 +1,15 @@
 const {Router} = require('express')
 const historyRouter = Router()
-const ensureAutheticated = require('../middlewares/ensureAutheticated')
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 const HistoryController = require('../controllers/HistoryControllers')
 
 const historyController = new HistoryController()
 
-historyRouter.use(ensureAutheticated)
+historyRouter.use(ensureAuthenticated)
 
-historyRouter.post('/', historyController.createHistoric)
-historyRouter.get('/', historyController.getUserHistoric)
+historyRouter.post('/', historyController.createHistory)
+historyRouter.get('/', historyController.getUserHistory)
 historyRouter.put('/', historyController.updateStatus)
 
 

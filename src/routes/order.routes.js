@@ -3,11 +3,11 @@ const {Router} = require('express')
 const orderRouter = Router()
 
 const OrderControllers = require('../controllers/OrderControllers')
-const ensureAutheticated = require('../middlewares/ensureAutheticated')
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 const orderController = new OrderControllers()
 
-orderRouter.use(ensureAutheticated)
+orderRouter.use(ensureAuthenticated)
 
 orderRouter.post('/', orderController.CreateOrder)
 orderRouter.get('/', orderController.GetAllOrders)
