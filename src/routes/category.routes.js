@@ -1,13 +1,13 @@
 const {Router} = require('express')
 const categoryRouter = Router()
-const ensureAutheticated = require('../middlewares/ensureAutheticated')
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
 
 
 const CategoriesController = require('../controllers/CategoriesControllers')
 
 const categoriesController = new CategoriesController()
 
-categoryRouter.use(ensureAutheticated)
+categoryRouter.use(ensureAuthenticated)
 
 categoryRouter.get('/', categoriesController.index)
 
