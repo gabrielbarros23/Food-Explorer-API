@@ -19,7 +19,7 @@ class OrderCreateServices {
         order_number,
         dish_id,
         user_id,
-        status: 1
+        status: 0
       }
     ))
 

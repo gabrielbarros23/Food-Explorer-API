@@ -15,7 +15,11 @@ class UserCreateServices {
         }
         
         if(checkUserEmail) {
-            throw new AppError("esse email ja esta em uso.", 400)
+            throw new AppError("Email ja esta em uso.", 400)
+        }
+
+        if(password.length < 8){
+            throw new AppError("Coloque uma senha com no mínimo 8 caracteres", 400)
         }
 
         const hashedPassword = await hash(password, 8)

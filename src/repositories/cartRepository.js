@@ -10,8 +10,12 @@ class cartRepository {
     return await knex("carts").where({user_id})
   }
 
-  async delete({user_id}){
-    return await knex("carts").where({user_id}).delete()
+  async deleteItem({cart_id}){
+    return await knex("carts").where({id:cart_id}).del()
+  }
+
+  async deleteAllCart({user_id}){
+    return await knex("carts").where({user_id}).del()
   }
 }
 
