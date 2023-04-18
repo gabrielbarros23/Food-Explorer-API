@@ -25,6 +25,17 @@ class OrderControllers {
     return response.json(orders)
   }
 
+  async GetDishesTitleWithOrderNumber(request, response){
+    const {order_number} = request.params
+
+    const orderRepository = new OrderRepository()
+    const orderCreateServices = new OrderCreateServices(orderRepository)
+
+    const string = await orderCreateServices.GetDishesTitleWithOrderNumber({order_number})   
+    
+    return response.json(string)
+  }
+
   async UpdateStatusToPending(request, response){
     const {order_number, status} = request.body
     const user_id = request.user.id

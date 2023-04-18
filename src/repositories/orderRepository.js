@@ -22,6 +22,18 @@ class orderRepository {
         return await knex('orders').whereIn('order_number', order_number)
     }
 
+    async getDishesTitle(id){   
+        const dishTitle = await knex('dishes').whereIn('id', id).select('title')
+        const value = dishTitle.map(title => title.title)
+        return value
+    }
+
+    async getDishesId (order_number){
+        const dishId = await knex('orders').where({order_number}).select('dish_id')
+        const value = dishId.map(id => id.dish_id)
+        return value
+    }
+
     async updateStatus({order_number, status}){
         return await knex('orders').where({order_number}).update({status})
     }

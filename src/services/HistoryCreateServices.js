@@ -19,7 +19,7 @@ class HistoryCreateServices {
         order_number,
         dish_id,
         user_id,
-        status: 1
+        status: 0
       }
     ))
 
@@ -50,7 +50,7 @@ class HistoryCreateServices {
 
       return {
         order_number: orderNumber.order_number,
-        create_at: orderNumber.created_at,
+        created_at: orderNumber.created_at,
         status: status[0],
         dishes
       }
@@ -60,12 +60,21 @@ class HistoryCreateServices {
    
   }
 
+  async GetDishesTitleWithOrderNumber({order_number}){
+    const dishId = await this.historyRepository.getDishesId(order_number)
+
+    const dishTitle = await this.historyRepository.getDishesTitle(dishId)
+    const titleUpdated = dishTitle.map(title => ` 1 x ${title}`)
+
+    return titleUpdated.toString()
+  }
+
   async updateStatus({order_number, status, user_id}){
     if(!order_number){
       throw new AppError("numero do pedido não encontrado.")
     }
 
-    if(!status){
+    if(status == undefined){
       throw new AppError("status indefinido")
     }
 

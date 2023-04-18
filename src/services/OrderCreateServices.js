@@ -48,7 +48,7 @@ class OrderCreateServices {
 
       const ordersArray = allOrders.filter(order => order.order_number === OrdersNumber.order_number)
       
-      const Orders = ordersArray.map(order =>{
+      const Dishes = ordersArray.map(order =>{
         const {order_number, created_at, status, ...newOrder } = order
         return newOrder 
       })
@@ -62,12 +62,21 @@ class OrderCreateServices {
         order_number:OrdersNumber.order_number,
         created_at: OrdersNumber.created_at,
         status: status[0],
-        Orders
+        Dishes
       }
       
     })
     
     return OrdersNumbersWithOrder
+  }
+
+  async GetDishesTitleWithOrderNumber({order_number}){
+    const dishId = await this.orderRepository.getDishesId(order_number)
+
+    const dishTitle = await this.orderRepository.getDishesTitle(dishId)
+    const titleUpdated = dishTitle.map(title => ` 1 x ${title}`)
+
+    return titleUpdated.toString()
   }
 
   async UpdateStatusToPending({user_id, order_number, status}){
@@ -78,7 +87,7 @@ class OrderCreateServices {
       throw new AppError("Apenas admins podem ver os pedidos pendentes")
     }
 
-    if(!order_number || !status){
+    if(!order_number || status == undefined){
       throw new AppError("Dados não enviado corretamente")
     }
 

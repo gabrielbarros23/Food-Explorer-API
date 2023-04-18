@@ -11,7 +11,9 @@ orderRouter.use(ensureAuthenticated)
 
 orderRouter.post('/', orderController.CreateOrder)
 orderRouter.get('/', orderController.GetAllOrders)
+orderRouter.get('/:order_number', orderController.GetDishesTitleWithOrderNumber)
 orderRouter.put('/', orderController.UpdateStatusToPending)
 orderRouter.delete('/:order_number', orderController.DeleteOrderWhenIsComplete)
+
 
 module.exports = orderRouter
