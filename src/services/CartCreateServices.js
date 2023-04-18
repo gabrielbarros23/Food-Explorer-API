@@ -17,9 +17,16 @@ class CartCreateServices {
     return await this.categoriesRepository.get({user_id})
   }
 
-  async delete({user_id}){
+  async deleteItem({cart_id}){
+    if(!cart_id){
+      throw new AppError("id Invalido")
+    }
+    return await this.categoriesRepository.deleteItem({cart_id})
+  }
+
+  async deleteAllCart({user_id}){
    
-    return await this.categoriesRepository.delete({user_id})
+    return await this.categoriesRepository.deleteAllCart({user_id})
   }
 }
 

@@ -24,6 +24,17 @@ class HistoryControllers {
     return response.json(History)
   }
 
+  async GetDishesTitleWithOrderNumber(request, response){
+    const {order_number} = request.params
+
+    const historyRepository = new HistoryRepository()
+    const historyCreateServices = new HistoryCreateServices(historyRepository)
+
+    const string =  await historyCreateServices.GetDishesTitleWithOrderNumber({order_number})
+    
+    return response.json(string)
+  }
+
   async updateStatus(request, response){
     const {order_number, status} = request.body
     const user_id = request.user.id

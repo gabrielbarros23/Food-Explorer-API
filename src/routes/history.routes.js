@@ -10,8 +10,7 @@ historyRouter.use(ensureAuthenticated)
 
 historyRouter.post('/', historyController.createHistory)
 historyRouter.get('/', historyController.getUserHistory)
+historyRouter.get('/:order_number', historyController.GetDishesTitleWithOrderNumber)
 historyRouter.put('/', historyController.updateStatus)
-
-
 
 module.exports = historyRouter
