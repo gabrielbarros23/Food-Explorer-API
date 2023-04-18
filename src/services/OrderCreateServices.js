@@ -14,6 +14,10 @@ class OrderCreateServices {
 
     const order_number = await this.orderRepository.getOrderNumber()
 
+    if(!order_number){
+      throw new AppError("Error em criar pedido")
+    }
+
     const orderInsert = dish_id.map(dish_id => (
       {
         order_number,
