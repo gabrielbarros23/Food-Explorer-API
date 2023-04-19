@@ -13,7 +13,11 @@ class OrderCreateServices {
     }
 
     const order_number = await this.orderRepository.getOrderNumber()
-    console.log(`${order_number} 2`)
+    console.log(order_number)
+
+    const orderNumberMigrate = await this.orderRepository.getOrderNumberIfExist(order_number)
+
+    console.log(orderNumberMigrate)
     
 
     if(!order_number){
@@ -22,14 +26,14 @@ class OrderCreateServices {
 
     const orderInsert = dish_id.map(dish_id => (
       {
-        order_number,
+        order_number: order_number[0],
         dish_id,
         user_id,
         status: 0
       }
     ))
 
-    console.log(`${orderInsert} 3`)
+    console.log(orderInsert)
 
     await this.orderRepository.createOrder(orderInsert)
 
