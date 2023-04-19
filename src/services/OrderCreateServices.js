@@ -13,12 +13,7 @@ class OrderCreateServices {
     }
 
     const order_number = await this.orderRepository.getOrderNumber()
-    console.log(order_number)
 
-    const orderNumberMigrate = await this.orderRepository.getOrderNumberIfExist(order_number)
-
-    console.log(orderNumberMigrate)
-    
 
     if(!order_number){
       throw new AppError("Error em criar pedido")
@@ -33,12 +28,8 @@ class OrderCreateServices {
       }
     ))
 
-    console.log(orderInsert)
-
     await this.orderRepository.createOrder(orderInsert)
 
-    console.log('success')
-    
     return order_number
 
   }

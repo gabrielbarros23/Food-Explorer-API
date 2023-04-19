@@ -14,8 +14,6 @@ class HistoryCreateServices {
       throw new AppError("Numero do pedido não encontrado.")
     }
 
-    console.log(order_number)
-
     const historyInsert = dish_id.map((dish_id) =>(
       {
         order_number: order_number[0],
@@ -24,8 +22,6 @@ class HistoryCreateServices {
         status: 0
       }
     ))
-
-    console.log(historyInsert)
 
     return await this.historyRepository.createHistory(historyInsert)
   }

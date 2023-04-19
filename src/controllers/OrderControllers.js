@@ -5,7 +5,6 @@ class OrderControllers {
   async CreateOrder(request, response){
     const {dish_id} = request.body
     const user_id = request.user.id
-    console.log(`${dish_id} 1`)
 
     const orderRepository = new OrderRepository()
     const orderCreateServices = new OrderCreateServices(orderRepository)
