@@ -3,7 +3,10 @@ const knex = require('../database/knex')
 
 class orderRepository {
     async getOrderNumber(){
-        return await knex('orders_number').insert({})
+        console.log('getOrderNumber')
+        const order_number = await knex('orders_number').insert({})
+        console.log('getOrderNumber 2')
+        return order_number
     }
 
     async returnUser({user_id}){
@@ -11,7 +14,10 @@ class orderRepository {
     }
 
     async createOrder(orderInsert){
-        return await knex('orders').insert(orderInsert)
+        console.log('createOrder')
+        const order = await knex('orders').insert(orderInsert)
+        console.log('createOrder 2')
+        return order
     }
    
     async getAllOrdersNumber(){
