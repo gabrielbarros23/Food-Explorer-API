@@ -13,6 +13,8 @@ class OrderCreateServices {
     }
 
     const order_number = await this.orderRepository.getOrderNumber()
+    console.log(`${order_number} 2`)
+    
 
     if(!order_number){
       throw new AppError("Error em criar pedido")
@@ -27,7 +29,11 @@ class OrderCreateServices {
       }
     ))
 
+    console.log(`${orderInsert} 3`)
+
     await this.orderRepository.createOrder(orderInsert)
+
+    console.log('success')
     
     return order_number
 
