@@ -15,7 +15,9 @@ class orderRepository {
 
     async createOrder(orderInsert){
         console.log('createOrder')
-        const order = await knex('orders').insert(orderInsert)
+        const order = await knex.transaction(async (trx) => {
+            return trx('orders').insert(orderInsert);
+        })
         console.log('createOrder 2')
         return order
     }
